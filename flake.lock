@@ -5,14 +5,18 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1780392887,
-        "narHash": "sha256-rBxZ4PG157u74V2wHbSbT6Pu63VNz1TDqzyXNrbBQtQ=",
-        "path": "/home/govindsingh/WORK/my_nix/push/nixos-hardware",
-        "type": "path"
+        "lastModified": 1780471752,
+        "narHash": "sha256-kcICIhD7QjQUDzbF4e14KcbeSpKVqrR7ylXbZAPDLNE=",
+        "owner": "govindsi",
+        "repo": "nixos-hardware",
+        "rev": "1942b23b97db956b023d14ceb96f8afa6332f9f3",
+        "type": "github"
       },
       "original": {
-        "path": "/home/govindsingh/WORK/my_nix/push/nixos-hardware",
-        "type": "path"
+        "owner": "govindsi",
+        "ref": "feat/qrb2210",
+        "repo": "nixos-hardware",
+        "type": "github"
       }
     },
     "nixpkgs": {

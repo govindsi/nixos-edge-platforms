@@ -1,4 +1,4 @@
-# unoQ
+# Edge Computing NixOS
 
 Consumer flake for building NixOS images on embedded boards. Hardware BSP and profiles live in [nixos-hardware](../nixos-hardware); this repo adds image layout, board-specific services, and machine configs.
 
@@ -29,14 +29,8 @@ Default root password is `nixos` — change in `platform/qrb2210/machines/arduin
 
 ## Adding a platform
 
+```
 1. Add `platform/<name>/default.nix` with `system`, `overlays`, `modules`, and `machines`.
 2. Import it in `flake.nix` and merge: `mkPlatformConfigs foo // mkPlatformConfigs bar`.
 
-## Git
-
-If `.git` is owned by root, fix ownership then use the history under `.git-local`:
-
-```bash
-sudo chown -R "$USER:$USER" .git
-rm -rf .git && mv .git-local .git
 ```

@@ -1,10 +1,10 @@
 {
-  description = "NixOS images for embedded platforms (UNO Q, future NXP, …)";
+  description = "NixOS images for embedded edge platforms (NXP, qcom arduino UNO-Q,…)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # QRB2210 modules are not on github:NixOS/nixos-hardware master yet.
-    nixos-hardware.url = "path:../nixos-hardware";
+    nixos-hardware.url = "github:govindsi/nixos-hardware/feat/qrb2210";
   };
 
   outputs = inputs@{ nixpkgs, nixos-hardware, ... }:

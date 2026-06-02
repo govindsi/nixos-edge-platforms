@@ -6,11 +6,13 @@
     nixos-hardware.url = "path:../nixos-hardware";
   };
 
-  outputs = inputs@{ nixpkgs, ... }:
+  outputs = inputs@{ nixpkgs, nixos-hardware, ... }:
     let
-      _mkPlatformConfigs = import ./lib/mk-platform-configs.nix { inherit nixpkgs; };
+      lib = nixpkgs.lib;
+      mkPlatformConfigs = import ./lib/mk-platform-configs.nix { inherit nixpkgs; };
+      qrb2210 = import ./platform/qrb2210 { inherit lib nixos-hardware; };
     in
     {
-      nixosConfigurations = { };
+      nixosConfigurations = mkPlatformConfigs qrb2210;
     };
 }

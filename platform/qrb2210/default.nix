@@ -16,7 +16,7 @@
     ./modules/arduino-image-output.nix
   ];
 
-  machines = {
-    arduino-uno-q = import ./machines/arduino-uno-q.nix;
+  targets = {
+    arduino-uno-q = import ./target/arduino-uno-q.nix;
   };
 }

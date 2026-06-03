@@ -65,8 +65,7 @@ in
         # Match Debian adbd.service: bind UDC only after adbd notifies (FunctionFS ready).
         Type = "notify";
         NotifyAccess = "main";
-        Environment =
-          lib.optional (cfg.udc != null) "ADBD_GADGET_UDC=${cfg.udc}";
+        Environment = lib.optional (cfg.udc != null) "ADBD_GADGET_UDC=${cfg.udc}";
         ExecStartPre = "${adbdUsbGadget} setup";
         ExecStart = "${pkgs.qrb2210-adbd}/bin/adbd";
         ExecStartPost = "${adbdUsbGadget} activate";

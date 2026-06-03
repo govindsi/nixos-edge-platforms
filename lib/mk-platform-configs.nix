@@ -5,17 +5,19 @@ platform:
 let
   inherit (nixpkgs) lib;
 in
-lib.mapAttrs (_name: machineModule:
+lib.mapAttrs (
+  _name: targetModule:
   lib.nixosSystem {
     system = platform.system;
     specialArgs = platform.specialArgs or { };
-    modules =
-      platform.modules
-      ++ [
-        ({ ... }: {
+    modules = platform.modules ++ [
+      (
+        { ... }:
+        {
           nixpkgs.overlays = platform.overlays;
-        })
-        machineModule
-      ];
+        }
+      )
+      targetModule
+    ];
   }
-) platform.machines
+) platform.targets

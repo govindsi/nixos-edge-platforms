@@ -14,7 +14,6 @@
   time.timeZone = "UTC";
 
   users.users.root = {
-    # Change before flashing
     password = "nixos";
   };
 

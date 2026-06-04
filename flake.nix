@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Govind Singh
 # SPDX-License-Identifier: GPL-2.0-only
 {
-  description = "NixOS images for embedded platforms (UNO Q, future NXP, …)";
+  description = "NixOS images for embedded platforms (UNO Q, i.MX8M Plus EVK, …)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -24,7 +24,10 @@
         nixos-hardware = hardware;
       };
 
-      # nxp = import ./platform/nxp { inherit lib; nixos-hardware = hardware; };
+      imx8mp-evk = import ./platform/nxp/imx8mp-evk {
+        inherit lib;
+        nixos-hardware = hardware;
+      };
 
       systems = [
         "x86_64-linux"
@@ -32,10 +35,8 @@
       ];
     in
     {
-      # Add more platforms: nixosConfigurations = mkPlatformConfigs qrb2210 // mkPlatformConfigs nxp;
-      nixosConfigurations = mkPlatformConfigs qrb2210;
+      nixosConfigurations = mkPlatformConfigs qrb2210 // mkPlatformConfigs imx8mp-evk;
 
-      # Plain nixfmt with no args reads stdin forever; nix fmt does not pass files.
       formatter = lib.genAttrs systems (
         system:
         let
@@ -54,6 +55,7 @@
 
       packages = lib.genAttrs systems (buildSystem: {
         arduino-uno-q-sd-image = mkSdImage qrb2210 "arduino-uno-q" buildSystem;
+        imx8mp-evk-sd-image = mkSdImage imx8mp-evk "imx8mp-evk" buildSystem;
       });
     };
 }

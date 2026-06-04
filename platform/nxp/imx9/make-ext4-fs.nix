@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Govind Singh
 # SPDX-License-Identifier: GPL-2.0-only
-# Builds a sized ext4 root filesystem image with a Nix store closure (from ghaf imx9).
+# Builds a sized ext4 root filesystem image with a Nix store closure.
 {
   pkgs,
   lib,

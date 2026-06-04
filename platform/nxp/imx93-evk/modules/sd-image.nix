@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Govind Singh
 # SPDX-License-Identifier: GPL-2.0-only
-# i.MX9x SD image (flash.bin @ 32 KiB + ext4 root), ported from ghaf imx9x-sdimage.nix.
+# i.MX9x SD image (flash.bin @ 32 KiB + ext4 root).
 {
   config,
   pkgs,
@@ -162,6 +162,8 @@ in
     };
 
     system.build.sdImage = pkgs.stdenv.mkDerivation {
+      name = config.sdImage.imageName;
+      compressImage = config.sdImage.compressImage;
       nativeBuildInputs = with pkgs; [
         dosfstools
         e2fsprogs
@@ -170,8 +172,6 @@ in
         util-linux
         zstd
       ];
-      inherit (config.sdImage) imageName compressImage;
-      name = imageName;
       buildCommand = ''
         mkdir firmware
         ${config.sdImage.populateFirmwareCommands}

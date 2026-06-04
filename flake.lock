@@ -5,11 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1780474201,
-        "narHash": "sha256-0c3swmBWOvEEhqA9WSyCB4PuobO+0WSAAqKB+drCOiU=",
+        "lastModified": 1780633207,
+        "narHash": "sha256-QYEnWmLbSE8VdNLXQ8QY7aPqSJtP7y8YBbSsBb3vkr4=",
         "ref": "refs/heads/feat/qrb2210",
-        "rev": "ede4b0014e5d0eb5f20b9f5d95c9b9139fdb07c5",
-        "revCount": 2787,
+        "rev": "35221f5c44ca89f38b53e9604e2c8af39f224053",
+        "revCount": 2789,
         "type": "git",
         "url": "file:../nixos-hardware"
       },

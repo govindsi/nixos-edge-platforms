@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2026 Govind Singh
+# SPDX-License-Identifier: GPL-2.0-only
 # Build nixosConfigurations from a platform descriptor (see platform/*/default.nix).
 { nixpkgs }:
 
@@ -23,7 +25,6 @@ let
     };
 in
 {
-  # For nixos-rebuild on the board (native aarch64).
   mkPlatformConfigs =
     platform:
     lib.mapAttrs (

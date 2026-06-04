@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2026 Govind Singh
 # SPDX-License-Identifier: GPL-2.0-only
 {
-  description = "NixOS images for embedded platforms (UNO Q, i.MX8M Plus EVK, …)";
+  description = "NixOS images for embedded platforms (UNO Q, i.MX8M Plus / i.MX93 EVK, …)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -29,13 +29,21 @@
         nixos-hardware = hardware;
       };
 
+      imx93-evk = import ./platform/nxp/imx93-evk {
+        inherit lib;
+        nixos-hardware = hardware;
+      };
+
       systems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
     in
     {
-      nixosConfigurations = mkPlatformConfigs qrb2210 // mkPlatformConfigs imx8mp-evk;
+      nixosConfigurations =
+        mkPlatformConfigs qrb2210
+        // mkPlatformConfigs imx8mp-evk
+        // mkPlatformConfigs imx93-evk;
 
       formatter = lib.genAttrs systems (
         system:
@@ -56,6 +64,7 @@
       packages = lib.genAttrs systems (buildSystem: {
         arduino-uno-q-sd-image = mkSdImage qrb2210 "arduino-uno-q" buildSystem;
         imx8mp-evk-sd-image = mkSdImage imx8mp-evk "imx8mp-evk" buildSystem;
+        imx93-evk-sd-image = mkSdImage imx93-evk "imx93-evk" buildSystem;
       });
     };
 }

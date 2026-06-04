@@ -44,3 +44,13 @@ Default root password is `nixos` — change in `platform/qrb2210/target/arduino-
 3. Add `packages.<buildSystem>.<name>-sd-image` entries in `flake.nix` for each builder you support.
 
 ```
+## Licensing
+
+| License | SPDX | Scope |
+| -------- | ------ | ----- |
+| GNU General Public License v2.0 only | [GPL-2.0-only](https://spdx.org/licenses/GPL-2.0-only.html) | Source code in this repository |
+
+Full license text: [LICENSES/GPL-2.0-only.txt](./LICENSES/GPL-2.0-only.txt). See [LICENSES/README.md](./LICENSES/README.md) for the SPDX layout.
+
+Compliance metadata: [REUSE.toml](./REUSE.toml).
+

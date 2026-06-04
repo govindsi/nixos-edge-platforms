@@ -1,3 +1,5 @@
+# SPDX-FileCopyrightText: 2026 Govind Singh
+# SPDX-License-Identifier: GPL-2.0-only
 {
   description = "NixOS images for embedded platforms (UNO Q, future NXP, …)";
 

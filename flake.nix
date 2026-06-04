@@ -12,7 +12,10 @@
     inputs@{ nixpkgs, hardware, ... }:
     let
       lib = nixpkgs.lib;
-      mkPlatformConfigs = import ./lib/mk-platform-configs.nix { inherit nixpkgs; };
+      inherit (import ./lib/mk-platform-configs.nix { inherit nixpkgs; })
+        mkPlatformConfigs
+        mkSdImage
+        ;
 
       qrb2210 = import ./platform/qrb2210 {
         inherit lib;
@@ -47,17 +50,8 @@
         ''
       );
 
-      packages = lib.genAttrs systems (
-        system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        {
-          default = pkgs.writeShellScriptBin "unoQ-help" ''
-            echo "Build SD image: nix build .#nixosConfigurations.arduino-uno-q.config.system.build.sdImage"
-            echo "Platforms: platform/qrb2210 (Arduino UNO Q), platform/nxp (planned)"
-          '';
-        }
-      );
+      packages = lib.genAttrs systems (buildSystem: {
+        arduino-uno-q-sd-image = mkSdImage qrb2210 "arduino-uno-q" buildSystem;
+      });
     };
 }

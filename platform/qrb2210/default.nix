@@ -2,7 +2,6 @@
 { lib, nixos-hardware }:
 {
   system = "aarch64-linux";
-  specialArgs.buildSystem = "x86_64-linux";
 
   overlays = [
     (import ./overlay.nix)

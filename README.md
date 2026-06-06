@@ -1,4 +1,4 @@
-# nixos-edge-platforms
+# unoQ
 
 Consumer flake for building NixOS SD images on embedded boards. Hardware BSP and profiles live in [nixos-hardware](../nixos-hardware); this repo adds image layout, board-specific services, and machine configs.
 
@@ -9,8 +9,9 @@ Supported platforms:
 | [qrb2210](./platform/qrb2210/) | Qualcomm QRB2210 (Arduino UNO Q) | `arduino-uno-q-sd-image` |
 | [imx8mp-evk](./platform/nxp/imx8mp-evk/) | NXP i.MX8M Plus EVK | `imx8mp-evk-sd-image` |
 | [imx93-evk](./platform/nxp/imx93-evk/) | NXP i.MX93 EVK | `imx93-evk-sd-image` |
+| [ucm-imx95](./platform/compulab/ucm-imx95/) | CompuLab UCM-i.MX95 EVK | `ucm-imx95-sd-image` |
 
-NXP-specific flash notes: [platform/nxp/README.md](./platform/nxp/README.md).
+NXP flash notes: [platform/nxp/README.md](./platform/nxp/README.md). CompuLab: [platform/compulab/README.md](./platform/compulab/README.md).
 
 ## Layout
 
@@ -28,6 +29,9 @@ platform/
     imx8mp-evk/           # i.MX8M Plus EVK
     imx93-evk/            # i.MX93 EVK
     imx9/                 # shared helpers (make-ext4-fs.nix)
+    README.md
+  compulab/
+    ucm-imx95/            # UCM-i.MX95 EVK
     README.md
 ```
 
@@ -58,6 +62,9 @@ nix build .#packages.x86_64-linux.imx8mp-evk-sd-image
 
 # NXP i.MX93 EVK
 nix build .#packages.x86_64-linux.imx93-evk-sd-image
+
+# CompuLab UCM-i.MX95 EVK
+nix build .#packages.x86_64-linux.ucm-imx95-sd-image
 ```
 
 Equivalent via `nixosConfigurations` (same derivations):
@@ -66,13 +73,14 @@ Equivalent via `nixosConfigurations` (same derivations):
 nix build .#nixosConfigurations.arduino-uno-q.config.system.build.sdImage
 nix build .#nixosConfigurations.imx8mp-evk.config.system.build.sdImage
 nix build .#nixosConfigurations.imx93-evk.config.system.build.sdImage
+nix build .#nixosConfigurations.ucm-imx95.config.system.build.sdImage
 ```
 
 ### Outputs
 
 **Arduino UNO Q:** `result/` contains a compressed image and an Arduino flash bundle for [arduino-flasher-cli](https://github.com/arduino/arduino-flasher-cli) (`*-arduino-flash.tar`).
 
-**NXP EVKs:** `result/` contains `nixos_*.img`, `flash.bin`, and `boot.img`. Write `flash.bin` to the SD card at a 32 KiB offset:
+**NXP / CompuLab i.MX9x EVKs:** `result/` contains `nixos_*.img`, `flash.bin`, and `boot.img`. Write `flash.bin` to the SD card at a 32 KiB offset:
 
 ```bash
 sudo dd if=./result/flash.bin of=/dev/sdX bs=1k seek=32 conv=fsync
@@ -95,7 +103,7 @@ Default root password is `nixos` — change in the platform `target/*.nix` befor
 | BSP (ATF, U-Boot, kernel, `nixosModules`, overlays) | [nixos-hardware](../nixos-hardware) |
 | SD image layout, cross-build wiring, board services, flake packages | unoQ (this repo) |
 
-Keep `hardware.url` pointing at upstream nixos-hardware or your nixos-hardware checkout (`git+file:../nixos-hardware` by default). After BSP changes, refresh the lock from unoQ:
+Keep `hardware.url` pointing at your nixos-hardware checkout (`git+file:../nixos-hardware` by default). After BSP changes, refresh the lock from unoQ:
 
 ```bash
 nix flake lock --update-input hardware
@@ -103,7 +111,7 @@ nix flake lock --update-input hardware
 
 ### Building and testing
 
-Cross-build SD images from **x86_64** using the `packages.x86_64-linux.*-sd-image` attributes (see [Build](#build)).
+Cross-build SD images from **x86_64** using the `packages.x86_64-linux.*-sd-image` attributes (see [Build](#build)). That is the supported developer workflow on a typical laptop.
 
 `nixos-hardware` exposes some boot packages only under `packages.aarch64-linux` (native aarch64). Those do **not** build on x86_64 without a remote aarch64 builder — use unoQ for imx93/imx8mp image work from x86_64.
 
@@ -120,3 +128,11 @@ nix fmt
 3. Confirm the relevant `nix build .#packages.x86_64-linux.<platform>-sd-image` succeeds.
 4. If you changed nixos-hardware, mention the required `hardware` input revision or PR link.
 
+### Git troubleshooting
+
+If `.git` is owned by root (e.g. after `sudo nix` in the tree), fix ownership before committing or updating the lock:
+
+```bash
+sudo chown -R "$USER:$USER" .git
+rm -rf .git && mv .git-local .git   # only if you use .git-local backup
+```

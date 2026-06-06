@@ -7,7 +7,7 @@ Board-specific image flakes live in subdirectories (same pattern as `platform/qr
 | i.MX8M Plus EVK | [imx8mp-evk](./imx8mp-evk/) | `nxp-imx8mp-evk` |
 | i.MX93 EVK | [imx93-evk](./imx93-evk/) | `nxp-imx93-evk` |
 
-Shared i.MX9x helpers: [imx9/](./imx9/) (`make-ext4-fs.nix` for imx93/imx95-style images).
+Shared i.MX9x helpers: [imx9/](./imx9/) (`make-ext4-fs.nix`, `sd-image.nix`). CompuLab UCM-i.MX95: [../compulab/ucm-imx95/](../compulab/ucm-imx95/).
 
 ## Build (i.MX8M Plus EVK)
 

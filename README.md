@@ -1,4 +1,4 @@
-# unoQ
+# nixos-edge-platforms
 
 Consumer flake for building NixOS SD images on embedded boards. Hardware BSP and profiles live in [nixos-hardware](../nixos-hardware); this repo adds image layout, board-specific services, and machine configs.
 
@@ -133,11 +133,3 @@ nix fmt
 3. Confirm the relevant `nix build .#packages.x86_64-linux.<platform>-sd-image` succeeds.
 4. If you changed nixos-hardware, mention the required `hardware` input revision or PR link.
 
-### Git troubleshooting
-
-If `.git` is owned by root (e.g. after `sudo nix` in the tree), fix ownership before committing or updating the lock:
-
-```bash
-sudo chown -R "$USER:$USER" .git
-rm -rf .git && mv .git-local .git   # only if you use .git-local backup
-```

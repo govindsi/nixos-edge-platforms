@@ -21,7 +21,7 @@
 
   # USB ADB shell from host (nix-shell -p android-tools; adb devices / adb shell)
   hardware.qrb2210.adb.enable = true;
-  hardware.qrb2210.resizeRootfs.enable = true;
+  hardware.qrb2210.resizeRootfs.enable = false;
 
   # Optional: more store space in the image
   # image.additionalSpace = "2G";

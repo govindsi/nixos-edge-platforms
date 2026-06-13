@@ -9,6 +9,7 @@ Supported platforms:
 | [qrb2210](./platform/qrb2210/) | Qualcomm QRB2210 (Arduino UNO Q) | `arduino-uno-q-sd-image` |
 | [imx8mp-evk](./platform/nxp/imx8mp-evk/) | NXP i.MX8M Plus EVK | `imx8mp-evk-sd-image` |
 | [imx93-evk](./platform/nxp/imx93-evk/) | NXP i.MX93 EVK | `imx93-evk-sd-image` |
+| [maaxboard-8ulp](./platform/nxp/maaxboard-8ulp/) | Avnet MaaXBoard 8ULP | `maaxboard-8ulp-sd-image` |
 | [ucm-imx95](./platform/compulab/ucm-imx95/) | CompuLab UCM-i.MX95 EVK | `ucm-imx95-sd-image` |
 
 NXP flash notes: [platform/nxp/README.md](./platform/nxp/README.md). CompuLab: [platform/compulab/README.md](./platform/compulab/README.md).
@@ -28,6 +29,7 @@ platform/
   nxp/
     imx8mp-evk/           # i.MX8M Plus EVK
     imx93-evk/            # i.MX93 EVK
+    maaxboard-8ulp/       # Avnet MaaXBoard 8ULP
     imx9/                 # shared helpers (make-ext4-fs.nix)
     README.md
   compulab/
@@ -62,6 +64,9 @@ nix build .#packages.x86_64-linux.imx8mp-evk-sd-image
 
 # NXP i.MX93 EVK
 nix build .#packages.x86_64-linux.imx93-evk-sd-image
+
+# Avnet MaaXBoard 8ULP
+nix build .#packages.x86_64-linux.maaxboard-8ulp-sd-image
 
 # CompuLab UCM-i.MX95 EVK
 nix build .#packages.x86_64-linux.ucm-imx95-sd-image

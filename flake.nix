@@ -34,6 +34,11 @@
         nixos-hardware = hardware;
       };
 
+      maaxboard-8ulp = import ./platform/nxp/maaxboard-8ulp {
+        inherit lib;
+        nixos-hardware = hardware;
+      };
+
       ucm-imx95 = import ./platform/compulab/ucm-imx95 {
         inherit lib;
         nixos-hardware = hardware;
@@ -49,6 +54,7 @@
         mkPlatformConfigs qrb2210
         // mkPlatformConfigs imx8mp-evk
         // mkPlatformConfigs imx93-evk
+        // mkPlatformConfigs maaxboard-8ulp
         // mkPlatformConfigs ucm-imx95;
 
       formatter = lib.genAttrs systems (
@@ -71,6 +77,7 @@
         arduino-uno-q-sd-image = mkSdImage qrb2210 "arduino-uno-q" buildSystem;
         imx8mp-evk-sd-image = mkSdImage imx8mp-evk "imx8mp-evk" buildSystem;
         imx93-evk-sd-image = mkSdImage imx93-evk "imx93-evk" buildSystem;
+        maaxboard-8ulp-sd-image = mkSdImage maaxboard-8ulp "maaxboard-8ulp" buildSystem;
         ucm-imx95-sd-image = mkSdImage ucm-imx95 "ucm-imx95" buildSystem;
       });
     };

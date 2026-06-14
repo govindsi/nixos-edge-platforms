@@ -11,10 +11,7 @@
 let
   imxBootAttr = "${target}-boot";
   imxBootPkg =
-    if builtins.hasAttr imxBootAttr pkgs then
-      builtins.getAttr imxBootAttr pkgs
-    else
-      pkgs.imx95-boot;
+    if builtins.hasAttr imxBootAttr pkgs then builtins.getAttr imxBootAttr pkgs else pkgs.imx95-boot;
 
   imxLabel = "i.MX${lib.removePrefix "imx" target}";
 

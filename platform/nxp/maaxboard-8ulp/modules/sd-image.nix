@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2026 Govind Singh
 # SPDX-License-Identifier: GPL-2.0-only
-# Avnet MaaXBoard 8ULP image: flash.bin @ sector 66, VFAT /boot + ext4 root (Yocto layout).
+# Avnet MaaXBoard 8ULP image: flash.bin @ sector 66, VFAT /boot + ext4 root.
 {
   config,
   lib,

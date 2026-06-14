@@ -5,10 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "dirtyRev": "753dc1f3b11d21191ea2ecd0eb812bb7ccac12cd-dirty",
-        "dirtyShortRev": "753dc1f-dirty",
-        "lastModified": 1781102896,
-        "narHash": "sha256-DglMPIGb77vulKcWHWk7AlDXgqPFzAzmTEI663QkxC8=",
+        "lastModified": 1781459835,
+        "narHash": "sha256-8kin6qpu4rimjO7U7K8XHhk6GXtYqTQscq5aNd0UuhQ=",
+        "ref": "refs/heads/feat_maaxboard-8ulp",
+        "rev": "e92a6f9b5dbd1fcffcbbcedc76cbff13083bdeb7",
+        "revCount": 2792,
         "type": "git",
         "url": "file:../nixos-hardware"
       },

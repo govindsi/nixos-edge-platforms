@@ -45,6 +45,8 @@ in
       cp -L ${config.system.build.toplevel}/dtbs/freescale/maaxboard-8ulp.dtb firmware/boot/maaxboard-8ulp.dtb
       cat > firmware/boot/uEnv.txt <<'EOF'
 fdt_file=maaxboard-8ulp.dtb
+fdt_addr_r=0x84000000
+fdt_addr=0x84000000
 console=ttyLP1,115200 console=tty1
 EOF
     '';
@@ -89,7 +91,8 @@ EOF
       EOF
 
       bootfs=boot-fs.img
-      mkfs.vfat -n NIXOS_BOOT -S 512 -C $bootfs $(( ${toString bootSizeMb} * 1024 * 1024 ))
+      # mkfs.vfat -C size is in KiB (not bytes).
+      mkfs.vfat -n NIXOS_BOOT -S 512 -C $bootfs $(( ${toString bootSizeMb} * 1024 ))
       mcopy -i $bootfs firmware/boot/Image ::Image
       mcopy -i $bootfs firmware/boot/maaxboard-8ulp.dtb ::maaxboard-8ulp.dtb
       mcopy -i $bootfs firmware/boot/uEnv.txt ::uEnv.txt

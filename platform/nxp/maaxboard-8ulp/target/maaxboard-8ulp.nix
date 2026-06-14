@@ -7,6 +7,9 @@
   system.stateVersion = "25.05";
 
   boot = {
+    # Baked into VFAT uEnv.txt via system.build.toplevel/kernel-params.
+    consoleLogLevel = 7;
+
     loader = {
       grub.enable = false;
       generic-extlinux-compatible.enable = true;

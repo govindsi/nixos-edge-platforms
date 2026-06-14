@@ -24,7 +24,7 @@ let
     initrd=initrd
     loadinitrd=fatload mmc ''${mmcdev}:''${mmcpart} ''${ramdisk_addr_r} ''${initrd}
     boot_os=run loadinitrd; booti ''${loadaddr} ''${ramdisk_addr_r}:''${filesize} ''${fdt_addr_r}
-    console=ttyLP1,115200 console=tty1
+    console=ttyLP1,115200 earlycon console=tty1
     mmcargs=setenv bootargs console=''${console} root=''${mmcroot} rootwait rw init=${system}/init ${lib.removeSuffix "\n" (builtins.readFile "${system}/kernel-params")}
   '';
 

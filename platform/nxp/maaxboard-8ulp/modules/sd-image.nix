@@ -15,6 +15,19 @@ let
     volumeLabel = "NIXOS_SD";
   };
 
+  system = config.system.build.toplevel;
+  uEnvTxt = pkgs.writeText "maaxboard-8ulp-uEnv.txt" ''
+    fdt_file=maaxboard-8ulp.dtb
+    fdt_addr_r=0x84000000
+    fdt_addr=0x84000000
+    ramdisk_addr_r=0x85000000
+    initrd=initrd
+    loadinitrd=fatload mmc ''${mmcdev}:''${mmcpart} ''${ramdisk_addr_r} ''${initrd}
+    boot_os=run loadinitrd; booti ''${loadaddr} ''${ramdisk_addr_r}:''${filesize} ''${fdt_addr_r}
+    console=ttyLP1,115200 console=tty1
+    mmcargs=setenv bootargs console=''${console} root=''${mmcroot} rootwait rw init=${system}/init ${lib.removeSuffix "\n" (builtins.readFile "${system}/kernel-params")}
+  '';
+
   bootSizeMb = 100;
   ubootReservedMb = 10;
   sectorSize = 512;
@@ -40,15 +53,11 @@ in
       chmod 0644 firmware/flash.bin
 
       mkdir -p firmware/boot
-      kernel=$(readlink -f ${config.system.build.toplevel}/kernel)
-      cp -L "$kernel" firmware/boot/Image
-      cp -L ${config.system.build.toplevel}/dtbs/freescale/maaxboard-8ulp.dtb firmware/boot/maaxboard-8ulp.dtb
-      cat > firmware/boot/uEnv.txt <<'EOF'
-fdt_file=maaxboard-8ulp.dtb
-fdt_addr_r=0x84000000
-fdt_addr=0x84000000
-console=ttyLP1,115200 console=tty1
-EOF
+      gen=$(readlink -f ${system})
+      cp -L "$gen/kernel" firmware/boot/Image
+      cp -L "$gen/initrd" firmware/boot/initrd
+      cp -L "$gen/dtbs/freescale/maaxboard-8ulp.dtb" firmware/boot/maaxboard-8ulp.dtb
+      cp ${uEnvTxt} firmware/boot/uEnv.txt
     '';
 
     populateRootCommands = lib.mkOverride 50 ''
@@ -94,6 +103,7 @@ EOF
       # mkfs.vfat -C size is in KiB (not bytes).
       mkfs.vfat -n NIXOS_BOOT -S 512 -C $bootfs $(( ${toString bootSizeMb} * 1024 ))
       mcopy -i $bootfs firmware/boot/Image ::Image
+      mcopy -i $bootfs firmware/boot/initrd ::initrd
       mcopy -i $bootfs firmware/boot/maaxboard-8ulp.dtb ::maaxboard-8ulp.dtb
       mcopy -i $bootfs firmware/boot/uEnv.txt ::uEnv.txt
 
